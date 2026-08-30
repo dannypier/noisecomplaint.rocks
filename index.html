@@ -174,6 +174,10 @@ button.submit:hover{background:var(--green-hi)}
 .notice{background:var(--ink-2);border:1px solid var(--green);border-radius:12px;padding:20px 22px}
 .notice strong{display:block;font-size:18px;margin-bottom:6px}
 .notice p{margin:0;color:var(--muted);font-size:15px}
+.notice a{color:var(--green)}
+.notice-warn{border-color:#c9762f}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+button.submit[disabled]{opacity:.6;cursor:default}
 
 /* ---------- band ---------- */
 ul.band{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:1fr}
@@ -426,11 +430,13 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
 </section>
 
 <!-- ============================================================
-     BOOKING
-     No third-party service — the form just opens the sender's own
-     email app, pre-addressed with the subject and details filled in.
-     noisecomplaintrocks@gmail.com appears twice below and once in the
-     script at the bottom of this file.
+     BOOKING — Web3Forms
+     Submits in place via fetch; the visitor never leaves the page.
+     Arrives at noisecomplaintrocks@gmail.com with the subject
+     "Noise Complaint Booking Request", reply-to set to the sender.
+     Free tier is 250 submissions/month. The access key is a public
+     alias for the email address, not a secret.
+     If the service ever dies, the mailto link below still works.
      ============================================================ -->
 <section id="booking">
   <div class="wrap">
@@ -462,10 +468,26 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
         <label for="b-msg">Details</label>
         <textarea id="b-msg" name="message" placeholder="How long a set? Indoors or out? Do you have a PA? Budget?"></textarea>
       </div>
-      <button class="submit" type="submit">Send it</button>
-      <p class="formnote">This opens your own email app. Prefer to write it yourself?
+      <!-- honeypot: real people never see this, bots fill it in -->
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <button id="b-submit" class="submit" type="submit">Send it</button>
+      <p class="formnote">Prefer to write it yourself?
         <a href="mailto:noisecomplaintrocks@gmail.com?subject=Noise%20Complaint%20Booking%20Request">noisecomplaintrocks@gmail.com</a></p>
     </form>
+
+    <div id="b-done" class="notice" hidden>
+      <strong>Got it — thanks.</strong>
+      <p>We'll get back to you at the address you gave us, usually within a day or two.
+      If it's urgent, email <a href="mailto:noisecomplaintrocks@gmail.com?subject=Noise%20Complaint%20Booking%20Request">noisecomplaintrocks@gmail.com</a> directly.</p>
+    </div>
+
+    <div id="b-fail" class="notice notice-warn" hidden>
+      <strong>That didn't go through.</strong>
+      <p>Something went wrong on our end. Please email
+      <a href="mailto:noisecomplaintrocks@gmail.com?subject=Noise%20Complaint%20Booking%20Request">noisecomplaintrocks@gmail.com</a>
+      and we'll pick it up from there.</p>
+    </div>
   </div>
 </section>
 
@@ -535,39 +557,61 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
   });
 })();
 
-/* Booking form -> opens the visitor's own email app, pre-filled.
-   No third-party service, nothing to pay for, nothing to break.
-   Change the address on the next line if the booking email changes
-   (and change it in the two places in the Book Us section above too). */
+/* Booking form -> Web3Forms, submitted in place with fetch so the
+   visitor never leaves the page. On failure we show the fallback
+   panel pointing at the plain email address, so a booking is never
+   silently lost. */
 (function () {
-  var TO = "noisecomplaintrocks@gmail.com";
-  var SUBJECT = "Noise Complaint Booking Request";
+  var ACCESS_KEY = "1e84554f-a2b0-4800-814d-1920df8ca8c6";
+  var ENDPOINT   = "https://api.web3forms.com/submit";
 
   var form = document.getElementById("booking-form");
-  if (!form) return;
+  var done = document.getElementById("b-done");
+  var fail = document.getElementById("b-fail");
+  var btn  = document.getElementById("b-submit");
+  if (!form || !done || !fail || !btn) return;
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    if (btn.disabled) return;
 
     var v = function (id) { return (document.getElementById(id).value || "").trim(); };
-    var lines = [
-      "Name: "            + (v("b-name")  || "—"),
-      "Email: "           + (v("b-email") || "—"),
-      "Venue or event: "  + (v("b-venue") || "—"),
-      "Date: "            + (v("b-date")  || "—"),
-      "",
-      "Details:",
-      v("b-msg") || "—",
-      "",
-      "— sent from noisecomplaint.rocks"
-    ];
 
-    var href = "mailto:" + TO +
-      "?subject=" + encodeURIComponent(SUBJECT) +
-      "&body="    + encodeURIComponent(lines.join("\n"));
+    var payload = {
+      access_key: ACCESS_KEY,
+      subject:    "Noise Complaint Booking Request",
+      from_name:  "noisecomplaint.rocks",
+      name:       v("b-name"),
+      email:      v("b-email"),
+      venue:      v("b-venue") || "(not given)",
+      date:       v("b-date")  || "(not given)",
+      message:    v("b-msg")   || "(no details given)",
+      botcheck:   document.querySelector('#booking-form [name="botcheck"]').checked
+    };
 
-    form.dataset.lastMailto = href;
-    window.location.href = href;
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+
+    var show = function (el) {
+      form.hidden = true;
+      el.hidden = false;
+      el.setAttribute("tabindex", "-1");
+      el.focus();
+    };
+
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data && data.success) { show(done); }
+        else { throw new Error(data && data.message || "submit failed"); }
+      })
+      .catch(function () {
+        show(fail);
+      });
   });
 })();
 </script>
