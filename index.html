@@ -132,6 +132,7 @@ ul.shows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;g
 .btn.primary:hover{background:var(--green-hi);border-color:var(--green-hi)}
 .btn-row{display:grid;gap:12px;grid-template-columns:1fr}
 @media(min-width:560px){.btn-row{grid-template-columns:1fr 1fr}}
+.btn-row.single{grid-template-columns:1fr;max-width:400px}
 
 /* ---------- forms ---------- */
 form{display:flex;flex-direction:column;gap:12px}
@@ -164,7 +165,7 @@ ul.band{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-c
 figure.photo{margin:0 0 22px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--ink-2)}
 figure.photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 32%}
 @media(max-width:559px){figure.photo img{aspect-ratio:4/5}}
-figure.photo figcaption{font-size:13px;color:var(--muted);padding:11px 15px;border-top:1px solid var(--line)}
+figure.photo img{display:block}
 
 /* ---------- footer ---------- */
 footer{padding:36px 0 60px;text-align:center;color:var(--muted);font-size:14px}
@@ -261,21 +262,16 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
 
 <!-- ============================================================
      TIP JAR — this is where the QR code at gigs points.
-     REPLACE-ME: Venmo username and Cash App cashtag
      ============================================================ -->
 <section id="tip">
   <div class="wrap">
     <h2>Buy Us a Beer</h2>
     <p class="sub">And tell us what you want us to play next time.</p>
 
-    <div class="btn-row">
-      <a class="btn primary" href="https://venmo.com/u/REPLACE-ME" rel="noopener">
+    <div class="btn-row single">
+      <a class="btn primary" href="https://venmo.com/u/dannypier" rel="noopener">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.5 3c.7 1.1 1 2.3 1 3.8 0 4.8-4.1 11-7.4 15.2H5.5L2.4 4.6l6.7-.6 1.6 13.2C12.2 14.7 14 10.7 14 8c0-1.5-.3-2.5-.7-3.3L19.5 3z"/></svg>
         Venmo
-      </a>
-      <a class="btn" href="https://cash.app/$REPLACE-ME" rel="noopener">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c-1 0-1.6.6-1.7 1.5l-.2 1.3c-2.6.3-4.4 1.8-4.4 4.1 0 2.6 2 3.7 4.6 4.5 2.1.7 2.8 1.2 2.8 2 0 .9-.8 1.4-2.1 1.4-1.5 0-3-.6-4.1-1.5-.5-.4-1.2-.4-1.6.1l-1 1.2c-.4.5-.4 1.2.1 1.6 1.2 1 2.7 1.7 4.3 1.9l-.2 1.4c-.1.9.5 1.5 1.4 1.5h.6c.9 0 1.6-.6 1.7-1.5l.2-1.4c2.8-.4 4.6-2.1 4.6-4.4 0-2.6-2-3.8-4.9-4.7-1.9-.6-2.6-1-2.6-1.8 0-.8.7-1.3 1.9-1.3 1.3 0 2.6.5 3.6 1.2.5.3 1.1.3 1.5-.2l1-1.2c.4-.5.3-1.2-.2-1.6-1-.8-2.3-1.3-3.7-1.6l.2-1.3c.1-.9-.5-1.5-1.4-1.5H12z"/></svg>
-        Cash App
       </a>
     </div>
   </div>
@@ -306,14 +302,17 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
 
 <!-- ============================================================
      BOOKING
-     REPLACE-ME: Formspree endpoint + booking email address
+     No third-party service — the form just opens the sender's own
+     email app, pre-addressed with the subject and details filled in.
+     REPLACE-ME-BOOKING-EMAIL appears twice below and once in the
+     script at the bottom of this file.
      ============================================================ -->
 <section id="booking">
   <div class="wrap">
     <h2>Book Us</h2>
     <p class="sub">Bars, breweries, backyards, block parties, birthdays. Tell us what you've got.</p>
 
-    <form action="https://formspree.io/f/REPLACE-ME" method="post">
+    <form id="booking-form">
       <div class="two-up">
         <div class="field">
           <label for="b-name">Your name</label>
@@ -339,7 +338,8 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
         <textarea id="b-msg" name="message" placeholder="How long a set? Indoors or out? Do you have a PA? Budget?"></textarea>
       </div>
       <button class="submit" type="submit">Send it</button>
-      <p class="formnote">Rather just email? <a href="mailto:REPLACE-ME@example.com">REPLACE-ME@example.com</a></p>
+      <p class="formnote">This opens your own email app. Prefer to write it yourself?
+        <a href="mailto:REPLACE-ME-BOOKING-EMAIL?subject=Noise%20Complaint%20Booking%20Request">REPLACE-ME-BOOKING-EMAIL</a></p>
     </form>
   </div>
 </section>
@@ -353,7 +353,6 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
     <p class="sub">Four guys with day jobs and a shared appreciation for the loud part of the second chorus.</p>
     <figure class="photo">
       <img src="band.jpg" alt="The four members of Noise Complaint crouched around their gear after a set, holding a pitcher of tip money." width="1200" height="1600" loading="lazy">
-      <figcaption>Load-out, tip pitcher, everybody still speaking to each other. A good night.</figcaption>
     </figure>
     <ul class="band">
       <li><span class="who">Danny</span><span class="what">Vocals &amp; guitar</span></li>
@@ -373,6 +372,44 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
     <a href="#booking">Booking</a> &middot; <a href="#tip">Buy us a beer</a> &middot; <a href="#list">Mailing list</a></p>
   </div>
 </footer>
+
+<script>
+/* Booking form -> opens the visitor's own email app, pre-filled.
+   No third-party service, nothing to pay for, nothing to break.
+   Change the address on the next line if the booking email changes
+   (and change it in the two places in the Book Us section above too). */
+(function () {
+  var TO = "REPLACE-ME-BOOKING-EMAIL";
+  var SUBJECT = "Noise Complaint Booking Request";
+
+  var form = document.getElementById("booking-form");
+  if (!form) return;
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    var v = function (id) { return (document.getElementById(id).value || "").trim(); };
+    var lines = [
+      "Name: "            + (v("b-name")  || "—"),
+      "Email: "           + (v("b-email") || "—"),
+      "Venue or event: "  + (v("b-venue") || "—"),
+      "Date: "            + (v("b-date")  || "—"),
+      "",
+      "Details:",
+      v("b-msg") || "—",
+      "",
+      "— sent from noisecomplaint.rocks"
+    ];
+
+    var href = "mailto:" + TO +
+      "?subject=" + encodeURIComponent(SUBJECT) +
+      "&body="    + encodeURIComponent(lines.join("\n"));
+
+    form.dataset.lastMailto = href;
+    window.location.href = href;
+  });
+})();
+</script>
 
 </body>
 </html>
