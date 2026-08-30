@@ -3,16 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Noise Complaint — All Bangers, No Deep Cuts | Denver</title>
-<meta name="description" content="Noise Complaint is a Denver cover band. All bangers, no deep cuts — Blink-182, Green Day, Olivia Rodrigo, Nirvana, Sublime, Chappell Roan, Radiohead and more. Shows, booking, and beer money.">
+<title>Noise Complaint — Denver Rock Cover Band</title>
+<meta name="description" content="Noise Complaint is a Denver rock cover band playing classic, punk, alternative and pop — the songs everyone already knows. Book us for taprooms, breweries, parties and events.">
+<link rel="canonical" href="https://noisecomplaint.rocks/">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://noisecomplaint.rocks/">
-<meta property="og:title" content="Noise Complaint">
-<meta property="og:description" content="All Bangers, No Deep Cuts. A Denver cover band.">
+<meta property="og:title" content="Noise Complaint — Denver Rock Cover Band">
+<meta property="og:description" content="All Bangers, No Deep Cuts. Classic, punk, alternative and pop covers, played loud in Denver.">
 <meta property="og:image" content="https://noisecomplaint.rocks/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Noise Complaint">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Noise Complaint — Denver Rock Cover Band">
+<meta name="twitter:description" content="All Bangers, No Deep Cuts. Classic, punk, alternative and pop covers, played loud in Denver.">
 <meta name="twitter:image" content="https://noisecomplaint.rocks/og.png">
 <meta name="theme-color" content="#0a0b09">
 
@@ -63,6 +68,7 @@ header.hero::before{
     repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 2px, transparent 2px 10px);
 }
 .hero-inner{position:relative}
+.hero-inner h1{margin:0}
 .logo{width:100%;max-width:600px;margin:0 auto}
 
 .tagline{
@@ -162,6 +168,10 @@ ul.band{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-c
 .band li{background:var(--ink-2);border:1px solid var(--line);border-radius:10px;padding:13px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 .band .who{font-weight:700}
 .band .what{color:var(--muted);font-size:14px}
+.prose{margin:0 0 26px;max-width:62ch}
+.prose p{margin:0 0 14px}
+.prose p:last-child{margin-bottom:0}
+.prose strong{color:var(--paper)}
 figure.photo{margin:0 0 22px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--ink-2)}
 figure.photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 32%}
 @media(max-width:559px){figure.photo img{aspect-ratio:4/5}}
@@ -182,11 +192,89 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
 </head>
 <body>
 
+<!-- ============================================================
+     STRUCTURED DATA — how Google understands who we are and what
+     we've got booked. Add a new block to "event" for each new gig
+     (and delete gigs once they've passed).
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MusicGroup",
+      "@id": "https://noisecomplaint.rocks/#band",
+      "name": "Noise Complaint",
+      "url": "https://noisecomplaint.rocks/",
+      "image": "https://noisecomplaint.rocks/og.png",
+      "logo": "https://noisecomplaint.rocks/logo.png",
+      "description": "Noise Complaint is a four-piece rock cover band in Denver, Colorado, playing classic rock, punk, alternative and pop covers for taprooms, breweries, bars and private events.",
+      "genre": ["Rock", "Classic Rock", "Punk Rock", "Alternative Rock", "Pop Rock", "Cover Band"],
+      "foundingLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Denver",
+          "addressRegion": "CO",
+          "addressCountry": "US"
+        }
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Denver" },
+        { "@type": "AdministrativeArea", "name": "Denver metropolitan area" },
+        { "@type": "AdministrativeArea", "name": "Front Range, Colorado" }
+      ],
+      "member": [
+        { "@type": "Person", "name": "Danny", "roleName": "Vocals and guitar" },
+        { "@type": "Person", "name": "Jeff",  "roleName": "Guitar" },
+        { "@type": "Person", "name": "Dan",   "roleName": "Drums" },
+        { "@type": "Person", "name": "Ben",   "roleName": "Bass" }
+      ]
+    },
+    {
+      "@type": "Event",
+      "@id": "https://noisecomplaint.rocks/#gig-2026-09-11",
+      "name": "Noise Complaint at Crazy Mountain Taproom",
+      "description": "Noise Complaint plays classic, punk, alternative and pop rock covers at Crazy Mountain Taproom in Denver.",
+      "startDate": "2026-09-11T18:00:00-06:00",
+      "endDate": "2026-09-11T20:00:00-06:00",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "url": "https://noisecomplaint.rocks/#shows",
+      "image": "https://noisecomplaint.rocks/og.png",
+      "performer": { "@id": "https://noisecomplaint.rocks/#band" },
+      "organizer": { "@id": "https://noisecomplaint.rocks/#band" },
+      "location": {
+        "@type": "MusicVenue",
+        "name": "Crazy Mountain Taproom",
+        "url": "https://crazymountaintaproomco.com/",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "1505 Ogden St",
+          "addressLocality": "Denver",
+          "addressRegion": "CO",
+          "postalCode": "80218",
+          "addressCountry": "US"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://noisecomplaint.rocks/#shows",
+        "validFrom": "2026-08-30T00:00:00-06:00"
+      }
+    }
+  ]
+}
+</script>
+
 <a class="skip" href="#shows">Skip to shows</a>
 
 <header class="hero">
   <div class="wrap hero-inner">
-    <img class="logo" src="logo.png" alt="Noise Complaint" width="1600" height="1115">
+    <h1><img class="logo" src="logo.png" alt="Noise Complaint — Denver rock cover band" width="1600" height="1038"></h1>
     <p class="tagline">All Bangers, No Deep Cuts</p>
     <ul class="pills">
       <li>Blink-182</li><li>Green Day</li><li>Olivia Rodrigo</li><li>Nirvana</li>
@@ -351,6 +439,19 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
   <div class="wrap">
     <h2>The Band</h2>
     <p class="sub">Four guys with day jobs and a shared appreciation for the loud part of the second chorus.</p>
+
+    <div class="prose">
+      <p><strong>Noise Complaint is a four-piece rock cover band in Denver, Colorado.</strong>
+      We play across the whole rock family — classic rock, punk, alternative and pop — and the
+      thread running through all of it is that you already know the words. Nirvana, Green Day,
+      Sublime, Blink-182, Radiohead, Olivia Rodrigo, Chappell Roan. No twenty-minute jams, no
+      deep cuts nobody asked for. Just the choruses a room sings back at you.</p>
+
+      <p>We play taprooms, breweries, bars, backyards, block parties and private events around
+      the Denver metro and the Front Range. Sets run anywhere from forty-five minutes to three
+      hours, we bring our own gear, and we load out fast.</p>
+    </div>
+
     <figure class="photo">
       <img src="band.jpg" alt="The four members of Noise Complaint crouched around their gear after a set, holding a pitcher of tip money." width="1200" height="1600" loading="lazy">
     </figure>
