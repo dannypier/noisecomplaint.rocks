@@ -50,6 +50,7 @@
 }
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   margin:0;background:var(--ink);color:var(--paper);
@@ -161,6 +162,9 @@ button.submit{
 button.submit:hover{background:var(--green-hi)}
 .formnote{font-size:13px;color:var(--muted);margin:2px 0 0}
 .formnote a{color:var(--green)}
+.notice{background:var(--ink-2);border:1px solid var(--green);border-radius:12px;padding:20px 22px}
+.notice strong{display:block;font-size:18px;margin-bottom:6px}
+.notice p{margin:0;color:var(--muted);font-size:15px}
 
 /* ---------- band ---------- */
 ul.band{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:1fr}
@@ -366,15 +370,22 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
 </section>
 
 <!-- ============================================================
-     MAILING LIST
-     REPLACE-ME: swap in the MailerLite embed / form URL
+     MAILING LIST — MailerLite
+     Posts straight to MailerLite's subscribe endpoint so the form
+     keeps this site's styling instead of MailerLite's default embed.
+     It submits into the hidden iframe below, which is what stops the
+     browser navigating away to a raw JSON response.
+     Account 2605706 · form 197262852568909454 · group "Gig List"
+     Double opt-in is ON, so subscribers must click a confirm email.
      ============================================================ -->
 <section id="list">
   <div class="wrap">
     <h2>Get the Gig List</h2>
     <p class="sub">A short email when we book a show. That's the whole deal — no spam, unsubscribe anytime.</p>
 
-    <form action="REPLACE-ME-MAILERLITE-URL" method="post">
+    <form id="ml-form"
+          action="https://assets.mailerlite.com/jsonp/2605706/forms/197262852568909454/subscribe"
+          method="post" target="ml-sink">
       <div class="field">
         <label for="ml-email">Email address</label>
         <input id="ml-email" name="fields[email]" type="email" autocomplete="email" placeholder="you@example.com" required>
@@ -383,8 +394,18 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
         <label for="ml-name">First name <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
         <input id="ml-name" name="fields[name]" type="text" autocomplete="given-name" placeholder="Optional">
       </div>
+      <input type="hidden" name="ml-submit" value="1">
+      <input type="hidden" name="anticsrf" value="true">
       <button class="submit" type="submit">Sign me up</button>
     </form>
+
+    <div id="ml-done" class="notice" hidden>
+      <strong>Almost there — check your email.</strong>
+      <p>We just sent a confirmation link. Click it and you're on the list.
+      If it's not there in a minute, look in spam or promotions.</p>
+    </div>
+
+    <iframe name="ml-sink" title="Signup handler" style="display:none" aria-hidden="true"></iframe>
   </div>
 </section>
 
@@ -475,6 +496,28 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
 </footer>
 
 <script>
+/* Gig list -> posts to MailerLite in a hidden iframe, then swaps the
+   form for the "check your email" notice. Without JS the signup still
+   registers; the visitor just doesn't get the confirmation panel. */
+(function () {
+  var form = document.getElementById("ml-form");
+  var done = document.getElementById("ml-done");
+  if (!form || !done) return;
+
+  var submitted = false;
+  form.addEventListener("submit", function () { submitted = true; });
+
+  var sink = document.querySelector('iframe[name="ml-sink"]');
+  if (!sink) return;
+  sink.addEventListener("load", function () {
+    if (!submitted) return;          // ignore the iframe's initial load
+    form.hidden = true;
+    done.hidden = false;
+    done.setAttribute("tabindex", "-1");
+    done.focus();
+  });
+})();
+
 /* Booking form -> opens the visitor's own email app, pre-filled.
    No third-party service, nothing to pay for, nothing to break.
    Change the address on the next line if the booking email changes
