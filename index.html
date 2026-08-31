@@ -225,8 +225,8 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
 }
 .video-play:hover .glyph,.video-play:focus-visible .glyph{transform:translate(-50%,-50%) scale(1.08)}
 .video-play:focus-visible{outline:3px solid var(--green);outline-offset:3px}
-.video-cap{font-size:13px;color:var(--muted);margin:12px 0 0}
-.video-cap a{color:var(--green)}
+/* bare video — no heading above it, so it sits tighter under the hero */
+#watch{padding:34px 0}
 
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:12px;top:12px;position:fixed;z-index:99;background:var(--green);color:#0a0b09;padding:10px 14px;border-radius:8px}
@@ -355,11 +355,8 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
      To change the video, replace the ID in data-yt below. It's the
      part after "v=" in a YouTube URL.
      ============================================================ -->
-<section id="watch">
+<section id="watch" aria-label="Live video">
   <div class="wrap">
-    <h2>Watch Us Play</h2>
-    <p class="sub">Live at Crazy Mountain Taproom, Denver. Unedited, exactly as loud as it sounds in the room.</p>
-
     <div class="video" data-yt="c6ocw1XqZW0" data-title="Noise Complaint — live at Crazy Mountain Taproom">
       <button class="video-play" type="button" aria-label="Play video: Noise Complaint live at Crazy Mountain Taproom">
         <img src="https://i.ytimg.com/vi/c6ocw1XqZW0/maxresdefault.jpg"
@@ -370,8 +367,6 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
         </span>
       </button>
     </div>
-    <p class="video-cap">Clicking play loads the video from YouTube.
-      <a href="https://www.youtube.com/watch?v=c6ocw1XqZW0" rel="noopener" target="_blank">Watch on YouTube</a></p>
   </div>
 </section>
 
