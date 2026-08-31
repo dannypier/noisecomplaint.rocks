@@ -197,7 +197,9 @@ figure.photo img{display:block}
 
 /* ---------- footer ---------- */
 footer{padding:36px 0 60px;text-align:center;color:var(--muted);font-size:14px}
-footer .fbars{display:flex;gap:4px;justify-content:center;margin-bottom:16px}
+/* align-items:flex-end sits the bars on a common baseline so they rise
+   upward, instead of hanging down from a common top edge */
+footer .fbars{display:flex;align-items:flex-end;gap:4px;justify-content:center;margin-bottom:16px}
 footer .fbars i{display:block;width:4px;height:14px;background:var(--green);border-radius:2px;opacity:.75}
 footer .fbars i:nth-child(2){height:22px}
 footer .fbars i:nth-child(3){height:9px}
