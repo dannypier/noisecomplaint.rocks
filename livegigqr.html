@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noise Complaint</title>
+<meta name="description" content="Noise Complaint — Denver rock cover band. Tip the band, follow us, see upcoming shows.">
+
+<!-- This page exists to be reached by the QR code in the guitar case.
+     It's deliberately kept out of search results so it doesn't compete
+     with the main site. -->
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#0a0b09">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#0a0b09;
+  --ink-2:#14160f;
+  --line:#2b3022;
+  --line-hi:#3c4430;
+  --paper:#f2f4ec;
+  --muted:#98a089;
+  --green:#8ed13f;
+  --green-hi:#a9e85e;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;min-height:100svh;
+  background:var(--ink);color:var(--paper);
+  font-family:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:36px 22px;
+  background-image:repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 2px, transparent 2px 10px);
+}
+img{max-width:100%;height:auto;display:block}
+.wrap{width:100%;max-width:440px;margin:0 auto}
+
+h1{margin:0}
+.logo{width:100%;max-width:340px;margin:0 auto}
+
+.tag{
+  text-align:center;margin:22px 0 0;
+  font-family:'Archivo Black',Impact,sans-serif;
+  font-size:19px;text-transform:uppercase;letter-spacing:-.01em;
+}
+.place{
+  text-align:center;margin:10px 0 0;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--green);font-weight:700;
+}
+
+.btns{display:flex;flex-direction:column;gap:13px;margin:36px 0 0}
+.btn{
+  display:flex;align-items:center;gap:14px;
+  padding:19px 20px;border-radius:14px;
+  font-weight:700;font-size:18px;text-decoration:none;
+  border:1px solid var(--line-hi);background:var(--ink-2);color:var(--paper);
+  transition:transform .12s ease,border-color .12s ease,background .12s ease;
+}
+.btn:active{transform:scale(.985)}
+.btn .ico{flex:0 0 26px;display:flex;align-items:center;justify-content:center}
+.btn .lbl{flex:1}
+.btn .lbl small{
+  display:block;font-weight:600;font-size:13px;color:var(--muted);
+  letter-spacing:.02em;margin-top:2px;
+}
+.btn .chev{flex:0 0 auto;opacity:.45}
+.btn.primary{background:var(--green);border-color:var(--green);color:#0a0b09}
+.btn.primary .lbl small{color:rgba(10,11,9,.62)}
+.btn.primary .chev{opacity:.5}
+@media(hover:hover){
+  .btn:hover{border-color:var(--green);transform:translateY(-2px)}
+  .btn.primary:hover{background:var(--green-hi);border-color:var(--green-hi)}
+}
+
+footer{text-align:center;margin:34px 0 0;color:var(--muted);font-size:13px}
+footer .bars{display:flex;gap:4px;align-items:flex-end;justify-content:center;margin-bottom:12px}
+footer .bars i{display:block;width:4px;height:14px;background:var(--green);border-radius:2px;opacity:.75}
+footer .bars i:nth-child(2){height:22px}
+footer .bars i:nth-child(3){height:9px}
+footer .bars i:nth-child(4){height:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <h1><img class="logo" src="logo-sm.png" alt="Noise Complaint" width="700" height="454" fetchpriority="high"></h1>
+  <p class="tag">All Bangers, No Deep Cuts</p>
+  <p class="place">Denver, Colorado</p>
+
+  <nav class="btns">
+
+    <a class="btn primary" href="https://venmo.com/u/dannypier" rel="noopener">
+      <span class="ico">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.5 3c.7 1.1 1 2.3 1 3.8 0 4.8-4.1 11-7.4 15.2H5.5L2.4 4.6l6.7-.6 1.6 13.2C12.2 14.7 14 10.7 14 8c0-1.5-.3-2.5-.7-3.3L19.5 3z"/></svg>
+      </span>
+      <span class="lbl">Buy us a beer<small>Venmo</small></span>
+      <span class="chev">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a class="btn" href="https://www.instagram.com/noisecomplaintrocks/" rel="me noopener">
+      <span class="ico">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.2" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <span class="lbl">Follow us<small>@noisecomplaintrocks</small></span>
+      <span class="chev">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a class="btn" href="https://noisecomplaint.rocks/">
+      <span class="ico">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M2.8 12h18.4M12 2.8a15 15 0 010 18.4 15 15 0 010-18.4z"/></svg>
+      </span>
+      <span class="lbl">See more<small>Shows, booking, video</small></span>
+      <span class="chev">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+  </nav>
+
+  <footer>
+    <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    noisecomplaint.rocks
+  </footer>
+
+</div>
+
+</body>
+</html>
