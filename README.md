@@ -22,7 +22,22 @@ site redeploys in about a minute.
 All were extracted from a photo of the frog-tape lettering on the kick drum head
 by green-chromaticity masking, then rotated 5.25° to level the two lines.
 
+## The two videos
+The page carries two, both using the same click-to-load facade — nothing is
+requested from YouTube until a visitor presses play.
+
+1. **Vertical clip** (`#reel`, first): phone footage in a 9:16 frame, capped at
+   330px wide and 60vh tall so it can't swallow a laptop screen. Its poster is
+   `reel-poster.jpg`, pulled from the source file rather than YouTube — a Short's
+   YouTube thumbnail comes back letterboxed and looks wrong in a portrait frame.
+2. **Landscape video** (`#watch`, below it): the standard 16:9 embed.
+
+To swap either one, replace the ID in its `data-yt` attribute. For the vertical
+one, also replace `reel-poster.jpg` with a frame from the new clip:
+`ffmpeg -ss 30 -i clip.mp4 -frames:v 1 -vf scale=720:1280 reel-poster.jpg`
+
 ## Other assets
+- `reel-poster.jpg` — poster frame for the vertical clip (720×1280)
 - `favicon.png` — NC monogram, built from the N in NOISE and the C in COMPLAINT
 - `og.png` — link-preview image (1200×630)
 - `band.jpg` — band photo
