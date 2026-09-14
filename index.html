@@ -230,6 +230,24 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
 /* bare video — no heading above it, so it sits tighter under the hero */
 #watch{padding:34px 0}
 
+/* ---------- vertical clip ----------
+   Phone footage, so the frame is 9:16 rather than 16:9. Capped by
+   height as well as width so it can't swallow a laptop screen. */
+.video.portrait{
+  aspect-ratio:9/16;
+  width:min(330px, 78vw);
+  max-height:60vh;
+  margin:0 auto;
+  border-radius:20px;
+}
+.video.portrait .video-play .glyph{width:66px;height:66px}
+#reel{padding:30px 0 0}
+#reel .wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+#reel .reel-cap{
+  margin:0;font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--green);font-weight:700;text-align:center;
+}
+
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:12px;top:12px;position:fixed;z-index:99;background:var(--green);color:#0a0b09;padding:10px 14px;border-radius:8px}
 </style>
@@ -357,6 +375,27 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
      To change the video, replace the ID in data-yt below. It's the
      part after "v=" in a YouTube URL.
      ============================================================ -->
+<!-- ============================================================
+     VERTICAL CLIP
+     Phone footage from a live show, so this frame is 9:16. Same
+     click-to-load facade as the main video: nothing loads from
+     YouTube until someone presses play.
+     To change it, replace the ID in data-yt and swap reel-poster.jpg.
+     ============================================================ -->
+<section id="reel" aria-label="Live clip">
+  <div class="wrap">
+    <div class="video portrait" data-yt="uuZIvKj80XQ" data-title="Noise Complaint — live">
+      <button class="video-play" type="button" aria-label="Play clip: Noise Complaint live">
+        <img src="reel-poster.jpg" alt="" width="720" height="1280" fetchpriority="high">
+        <span class="glyph" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.2v13.6L19.5 12 8 5.2z"/></svg>
+        </span>
+      </button>
+    </div>
+    <p class="reel-cap">Live in Denver</p>
+  </div>
+</section>
+
 <section id="watch" aria-label="Live video">
   <div class="wrap">
     <div class="video" data-yt="c6ocw1XqZW0" data-title="Noise Complaint — live at Crazy Mountain Taproom">
@@ -600,21 +639,22 @@ footer a{color:var(--paper);text-decoration-color:var(--green)}
 /* Video facade -> only load the YouTube player once someone asks for
    it. Until then the page carries a thumbnail and nothing else. */
 (function () {
-  var box = document.querySelector(".video[data-yt]");
-  if (!box) return;
-  var btn = box.querySelector(".video-play");
-  if (!btn) return;
+  var boxes = document.querySelectorAll(".video[data-yt]");
+  Array.prototype.forEach.call(boxes, function (box) {
+    var btn = box.querySelector(".video-play");
+    if (!btn) return;
 
-  btn.addEventListener("click", function () {
-    var id = box.getAttribute("data-yt");
-    var frame = document.createElement("iframe");
-    frame.src = "https://www.youtube-nocookie.com/embed/" + id +
-                "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
-    frame.title = box.getAttribute("data-title") || "Video";
-    frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-    frame.allowFullscreen = true;
-    box.replaceChildren(frame);
-    frame.focus();
+    btn.addEventListener("click", function () {
+      var id = box.getAttribute("data-yt");
+      var frame = document.createElement("iframe");
+      frame.src = "https://www.youtube-nocookie.com/embed/" + id +
+                  "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
+      frame.title = box.getAttribute("data-title") || "Video";
+      frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      frame.allowFullscreen = true;
+      box.replaceChildren(frame);
+      frame.focus();
+    });
   });
 })();
 
